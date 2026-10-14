@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build QuietPC.exe
+        run: dotnet build QuietPC.csproj -c Release -nologo
+
+      - name: Upload exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: QuietPC
+          path: bin/Release/net48/QuietPC.exe
+
+      - name: Publish release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: bin/Release/net48/QuietPC.exe
+          generate_release_notes: true
