@@ -60,7 +60,7 @@ The app is C# targeting .NET Framework 4.8, which is built into Windows 10. With
 dotnet build -c Release
 ```
 
-The exe ends up in `bin/Release/net48/QuietPC.exe`. Every push is also built automatically by GitHub Actions, and pushing a tag such as `v1.0.1` publishes a release.
+The exe ends up in `bin/Release/net48/QuietPC.exe`. Every push to `main` is built on Windows by GitHub Actions and published as a release named after the `<Version>` in `QuietPC.csproj`, so bump the version to publish a new one.
 
 ## License
 
